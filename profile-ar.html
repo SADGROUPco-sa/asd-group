@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مجموعة ASD المتكاملة المحدودة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --gold-dark: #8a6820;
+  --black: #080808;
+  --dark: #111111;
+  --dark2: #1a1a1a;
+  --dark3: #222222;
+  --text: #e8e8e8;
+  --text-muted: #888;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 25px 80px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #080808 0%, #0f0f0f 50%, #080808 100%);
+  z-index: 1;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(201,168,76,0.02) 80px, rgba(201,168,76,0.02) 81px),
+    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(201,168,76,0.02) 80px, rgba(201,168,76,0.02) 81px);
+  z-index: -1;
+}
+
+.logo-container {
+  position: relative;
+  margin-bottom: 30px;
+  animation: heroEntrance 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+}
+
+.logo-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.3);
+  animation: ringPulse 3s ease-in-out infinite;
+}
+
+.logo-ring:nth-child(1) { width: 165px; height: 165px; animation-delay: 0s; }
+.logo-ring:nth-child(2) { width: 195px; height: 195px; animation-delay: 0.5s; opacity: 0.5; }
+.logo-ring:nth-child(3) { width: 225px; height: 225px; animation-delay: 1s; opacity: 0.25; }
+
+@keyframes ringPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
+}
+
+.logo-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  box-shadow:
+    0 0 0 4px rgba(201,168,76,0.1),
+    0 0 40px rgba(201,168,76,0.4),
+    0 0 80px rgba(201,168,76,0.2),
+    inset 0 0 30px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 2;
+  display: block;
+}
+
+.company-name-ar {
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 900;
+  background: linear-gradient(135deg, #c9a84c 0%, #f0d080 40%, #c9a84c 60%, #8a6820 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+  animation: heroEntrance 1.2s 0.2s cubic-bezier(0.16,1,0.3,1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  letter-spacing: 0.5px;
+}
+
+.company-name-en {
+  font-size: clamp(12px, 3vw, 15px);
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 35px;
+  animation: heroEntrance 1.2s 0.35s cubic-bezier(0.16,1,0.3,1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes heroEntrance {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 35px;
+  width: 280px;
+  animation: heroEntrance 1.2s 0.5s forwards;
+  opacity: 0;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.gold-divider-diamond {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px var(--gold);
+}
+
+.tagline-box {
+  background: linear-gradient(135deg,
+    rgba(201,168,76,0.06) 0%,
+    rgba(201,168,76,0.02) 50%,
+    rgba(201,168,76,0.06) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 16px;
+  padding: 28px 30px;
+  max-width: 620px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  animation: heroEntrance 1.2s 0.65s forwards;
+  opacity: 0;
+}
+
+.tagline-box::before {
+  content: '"';
+  position: absolute;
+  top: -10px; right: 20px;
+  font-size: 120px;
+  color: rgba(201,168,76,0.06);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.tagline-box::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, transparent, var(--gold), transparent);
+}
+
+.tagline-text {
+  font-size: clamp(13px, 3.5vw, 15px);
+  line-height: 2.2;
+  color: #ccc;
+  font-weight: 300;
+}
+
+.tagline-text strong {
+  color: var(--gold-light);
+  font-weight: 700;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: fadeInUp 1s 1.5s forwards;
+  opacity: 0;
+}
+
+.scroll-mouse {
+  width: 24px; height: 38px;
+  border: 2px solid rgba(201,168,76,0.4);
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-mouse::after {
+  content: '';
+  position: absolute;
+  top: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% { top: 6px; opacity: 1; }
+  100% { top: 22px; opacity: 0; }
+}
+
+.scroll-text {
+  font-size: 10px;
+  color: rgba(201,168,76,0.4);
+  letter-spacing: 2px;
+}
+
+.section-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 70px 20px;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding: 6px 18px;
+  border-radius: 50px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.section-title-main {
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.services-bg {
+  background: linear-gradient(180deg, var(--black) 0%, #0d0d0d 50%, var(--black) 100%);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+
+.service-card {
+  background: linear-gradient(135deg, #141414 0%, #1c1c1c 100%);
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 22px 18px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.service-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-card:hover {
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(201,168,76,0.08);
+}
+
+.service-emoji {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));
+}
+
+.service-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.service-items {
+  list-style: none;
+  font-size: 12px;
+  color: #999;
+  line-height: 2;
+}
+
+.service-items li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.service-items li::before {
+  content: '◆';
+  color: var(--gold);
+  font-size: 6px;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+.team-bg {
+  background: linear-gradient(180deg, var(--black) 0%, #0a0a0a 100%);
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 480px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+
+.team-card {
+  background: linear-gradient(135deg, #121212, #1a1a1a);
+  border: 1px solid #252525;
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.team-card.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.team-card:hover {
+  border-color: rgba(201,168,76,0.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.team-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+  border: 1.5px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 12px;
+  box-shadow: 0 0 20px rgba(201,168,76,0.1);
+}
+
+.team-role-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.team-exp-text {
+  font-size: 11px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.team-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.stats-section {
+  background: linear-gradient(135deg,
+    rgba(201,168,76,0.08) 0%,
+    rgba(201,168,76,0.03) 50%,
+    rgba(201,168,76,0.08) 100%);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 50px 20px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.contact-bg {
+  background: linear-gradient(180deg, var(--black) 0%, #0d0a00 100%);
+  padding: 70px 20px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 450px;
+  margin: 0 auto 30px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #141414, #1c1c1c);
+  border: 1px solid #252525;
+  border-radius: 14px;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.contact-card:hover {
+  border-color: rgba(201,168,76,0.3);
+  transform: translateX(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.contact-card:hover::before { opacity: 1; }
+
+.contact-icon-box {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.contact-label {
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.contact-value {
+  font-size: 13px;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.whatsapp-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #128C7E, #25D366);
+  color: white;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.3), 0 0 0 0 rgba(37,211,102,0.4);
+  animation: waPulse 2.5s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+
+.whatsapp-btn:hover { transform: scale(1.05); }
+
+@keyframes waPulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(37,211,102,0.3), 0 0 0 0 rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 8px 30px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0); }
+}
+
+.float-wa {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, #128C7E, #25D366);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  text-decoration: none;
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  animation: waPulse 2.5s ease-in-out infinite;
+}
+
+.footer {
+  background: #050505;
+  border-top: 1px solid #1a1a1a;
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.footer-logo-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: #333;
+}
+
+.footer-gold-line {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 12px auto;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+<a href="https://wa.me/966548499610" class="float-wa" target="_blank">💬</a>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="logo-container">
+    <div class="logo-ring"></div>
+    <div class="logo-ring"></div>
+    <div class="logo-ring"></div>
+    <img src="https://i.ibb.co/MkWBwkFD/image.jpg" alt="ASD GROUP" class="logo-img">
+  </div>
+  <div class="company-name-ar">مجموعة ASD المتكاملة المحدودة</div>
+  <div class="company-name-en">ASD INTEGRATED GROUP Co.</div>
+  <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+  <div class="tagline-box">
+    <p class="tagline-text">
+      في عالم الأعمال المعقد، <strong>الأمانة المالية هي نقطة ارتكازك.</strong><br><br>
+      تأسست مجموعة ASD على مبدأ واحد لا نساوم عليه:<br>
+      <strong>الصدق قبل الحسابات، والوضوح قبل التقارير.</strong><br><br>
+      نوفر لكم غطاءً مهنياً متكاملاً يتسم بالدقة المتناهية والأمانة المطلقة.
+      عندما تضعون ثقتكم بنا، تتفرغون أنتم لتطوير أعمالكم، وتتركون لنا مهمة
+      حماية أرقامكم، تنظيم تدفقاتكم المالية، وضمان التزامكم الكامل بأعلى
+      معايير المحاسبة والمراجعة.<br><br>
+      <strong>معكم خطوة بخطوة، بأعين يقظة، وضمير مهني لا يغفل.</strong>
+    </p>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-mouse"></div>
+    <div class="scroll-text">اكتشف المزيد</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid fade-in-up">
+    <div>
+      <div class="stat-number">+15</div>
+      <div class="stat-label">سنة خبرة</div>
+    </div>
+    <div>
+      <div class="stat-number">6</div>
+      <div class="stat-label">خدمات متكاملة</div>
+    </div>
+    <div>
+      <div class="stat-number">+8</div>
+      <div class="stat-label">خبراء متخصصون</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-bg">
+  <div class="section-wrapper">
+    <div class="section-header fade-in-up">
+      <div class="section-badge">⚡ خدماتنا</div>
+      <div class="section-title-main">حلول مالية متكاملة</div>
+      <div class="section-subtitle">نقدم طيفاً شاملاً من الخدمات المالية والمحاسبية والإدارية</div>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <span class="service-emoji">📒</span>
+        <div class="service-name">المحاسبة وإمساك الدفاتر</div>
+        <ul class="service-items">
+          <li>تنظيم النظام المحاسبي وشجرة الحسابات</li>
+          <li>تحديد الأرصدة الافتتاحية</li>
+          <li>تسجيل القيود اليومية</li>
+          <li>مطابقة الحساب البنكي شهرياً</li>
+          <li>تقارير شهرية وسنوية</li>
+          <li>إقرارات ضريبة القيمة المضافة</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🕌</span>
+        <div class="service-name">الزكاة والفحص الضريبي</div>
+        <ul class="service-items">
+          <li>إقرارات الزكاة والدخل</li>
+          <li>منصة قوائم — وزارة التجارة</li>
+          <li>متابعة الفحص الضريبي والزكوي</li>
+          <li>طلبات الاسترداد الضريبي</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🔍</span>
+        <div class="service-name">المراجعة والتدقيق المالي</div>
+        <ul class="service-items">
+          <li>تدقيق القوائم المالية</li>
+          <li>تقارير المراجع المستقل</li>
+          <li>التحقق من السجلات المحاسبية</li>
+          <li>تحسين الضبط الداخلي</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">🏢</span>
+        <div class="service-name">تأسيس الشركات والأعمال</div>
+        <ul class="service-items">
+          <li>تأسيس شركات سعودية وأجنبية</li>
+          <li>سجل الاستثمار للمقيم</li>
+          <li>الاستحواذ والاندماج</li>
+          <li>المتابعة الإدارية والحكومية</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">⛏️</span>
+        <div class="service-name">الرخص التعدينية والمحاجر</div>
+        <ul class="service-items">
+          <li>استخراج وتجديد رخص المحاجر</li>
+          <li>رخص تعدينية — فئة ج</li>
+          <li>التقرير التعديني السنوي</li>
+          <li>الامتثال للوائح الهيئة</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <span class="service-emoji">💡</span>
+        <div class="service-name">الاستشارات المالية</div>
+        <ul class="service-items">
+          <li>دراسات الجدوى الاقتصادية</li>
+          <li>إعداد واستخراج شهادة المحتوى المحلي</li>
+          <li>تقييم الشركات والأصول</li>
+          <li>التخطيط المالي وإعادة الهيكلة</li>
+          <li>الاستشارات الاستثمارية والتمويلية</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="team-bg">
+  <div class="section-wrapper">
+    <div class="section-header fade-in-up">
+      <div class="section-badge">👥 فريق العمل</div>
+      <div class="section-title-main">خبرات تُؤتمن</div>
+      <div class="section-subtitle">فريق من المتخصصين السعوديين والخبراء المعتمدين</div>
+    </div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-avatar">🏅</div>
+        <div class="team-role-title">محاسب ومراجع أول</div>
+        <div class="team-exp-text">خبرة متراكمة في المحاسبة والمراجعة</div>
+        <div class="team-badge">+15 سنة</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">✅</div>
+        <div class="team-role-title">مراجع معتمد</div>
+        <div class="team-exp-text">شريك سعودي — هيئة المحاسبين السعوديين</div>
+        <div class="team-badge">SOCPA</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">🏛️</div>
+        <div class="team-role-title">خبير أعمال إدارية وحكومية</div>
+        <div class="team-exp-text">شريك سعودي — تنفيذ الأعمال الحكومية</div>
+        <div class="team-badge">+25 سنة</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">🏦</div>
+        <div class="team-role-title">محاسب LC بنكي</div>
+        <div class="team-exp-text">شريك سعودي — مصرف الأهلي سابقاً</div>
+        <div class="team-badge">خبرة بنكية</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">📊</div>
+        <div class="team-role-title">محاسب أول</div>
+        <div class="team-exp-text">خبرة في المحاسبة المالية والتحليل</div>
+        <div class="team-badge">+10 سنوات</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">👨‍💼</div>
+        <div class="team-role-title">فريق محاسبين متخصصين</div>
+        <div class="team-exp-text">كوادر محاسبية متخصصة ومؤهلة</div>
+        <div class="team-badge">+4 محاسبين</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-bg">
+  <div class="section-wrapper" style="padding-top:0">
+    <div class="section-header fade-in-up">
+      <div class="section-badge">📞 تواصل معنا</div>
+      <div class="section-title-main">نحن هنا لخدمتكم</div>
+      <div class="section-subtitle">تواصلوا معنا وسنكون سعداء بمناقشة احتياجاتكم</div>
+    </div>
+    <div class="contact-cards">
+      <a href="tel:0548499610" class="contact-card">
+        <div class="contact-icon-box">📱</div>
+        <div>
+          <div class="contact-label">هاتف</div>
+          <div class="contact-value" dir="ltr">0548499610</div>
+        </div>
+      </a>
+      <a href="mailto:SADGROUPCOMPANY@GMAIL.COM" class="contact-card">
+        <div class="contact-icon-box">📧</div>
+        <div>
+          <div class="contact-label">البريد الإلكتروني</div>
+          <div class="contact-value" dir="ltr">SADGROUPCOMPANY@GMAIL.COM</div>
+        </div>
+      </a>
+      <div class="contact-card">
+        <div class="contact-icon-box">📍</div>
+        <div>
+          <div class="contact-label">الموقع</div>
+          <div class="contact-value">جدة — شارع التحلية</div>
+        </div>
+      </div>
+    </div>
+    <div class="whatsapp-container">
+      <a href="https://wa.me/966548499610" class="whatsapp-btn" target="_blank">
+        💬 تواصل عبر واتساب
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo-text">مجموعة ASD المتكاملة المحدودة</div>
+  <div class="footer-gold-line"></div>
+  <div class="footer-copy">© 2025 ASD INTEGRATED GROUP Co. — جميع الحقوق محفوظة</div>
+</div>
+
+<script>
+const container = document.getElementById('particles');
+for (let i = 0; i < 35; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    width: ${Math.random() * 3 + 1}px;
+    height: ${Math.random() * 3 + 1}px;
+    animation-duration: ${Math.random() * 15 + 10}s;
+    animation-delay: ${Math.random() * 10}s;
+  `;
+  container.appendChild(p);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, entry.target.dataset.delay || 0);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.service-card, .team-card, .fade-in-up').forEach((el, i) => {
+  el.dataset.delay = (i % 3) * 120;
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
